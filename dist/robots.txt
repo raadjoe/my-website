@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.joe-raad.com/sitemap.xml
+Sitemap: https://joe-raad.com/sitemap.xml

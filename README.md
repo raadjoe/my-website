@@ -56,7 +56,7 @@ Each route is a page component. Content is authored in TSX (and in config where 
 
 **Assets**
 
-- `public/` — files copied as-is to the build root (e.g. `robots.txt`, images referenced by path).
+- `public/` — files copied as-is to the build root (e.g. `robots.txt`, `CNAME`, `.nojekyll`, images referenced by path).
 
 **Request flow (conceptual)** — `index.html` loads `main.tsx` → `App.tsx` → shell (`Navbar`, `Footer`) + `Routes` → each page may use `PageMeta` and shared layout components.
 
@@ -93,12 +93,27 @@ Open the URL shown in the terminal (typically `http://localhost:8080`).
 
 Copy `.env.example` to `.env` or `.env.production` and set:
 
-- **`VITE_SITE_URL`** — canonical origin (no trailing slash), e.g. `https://www.example.com`. Used for absolute Open Graph / JSON-LD URLs in production builds. If unset, client code falls back to `window.location.origin` in the browser.
+- **`VITE_SITE_URL`** — canonical origin (no trailing slash), e.g. `https://joe-raad.com`. Used for absolute Open Graph / JSON-LD URLs in production builds. If unset, client code falls back to `window.location.origin` in the browser.
 
 ## Build output
 
 `npm run build` emits static files under `dist/`. Deploy that folder to your host; configure the host for SPA fallback to `index.html` if you use client-side routes on deep links.
 
-## GitHub Pages and custom domain
+## Publish with GitHub Pages (`https://joe-raad.com`)
 
-The repo includes a **GitHub Actions** workflow (`.github/workflows/deploy.yml`) that publishes to the **`gh-pages`** branch, plus `public/CNAME` and `public/.nojekyll` for Pages. **Step-by-step setup (Namecheap DNS, GitHub settings, HTTPS)** is in **[DEPLOY.md](./DEPLOY.md)**.
+This repo is set up to deploy automatically:
+
+| Piece | Role |
+|--------|------|
+| [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) | On every push to `main` or `master` (or manual **Run workflow**), runs `npm ci`, `npm run build` with `VITE_SITE_URL=https://joe-raad.com`, and pushes `dist/` to the **`gh-pages`** branch. |
+| `public/CNAME` | Tells GitHub Pages the custom hostname is **`joe-raad.com`** (apex, no `www`). |
+| `public/.nojekyll` | Disables Jekyll processing on Pages so static assets behave predictably. |
+
+**Quick checklist**
+
+1. Push this repo to GitHub and enable **Settings → Actions → General → Workflow permissions → Read and write permissions** (required so the workflow can update `gh-pages`).
+2. After the first successful workflow run, set **Settings → Pages → Build and deployment → Branch** to **`gh-pages`** / **`/(root)`**.
+3. Add **Settings → Pages → Custom domain**: **`joe-raad.com`**, then configure DNS at your registrar (A records for the apex to GitHub’s IPs—see below).
+4. Turn on **Enforce HTTPS** once DNS verifies.
+
+Full DNS and troubleshooting steps are in **[DEPLOY.md](./DEPLOY.md)**.

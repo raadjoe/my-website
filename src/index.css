@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nova-square-regular {
+    font-family: "Nova Square", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 45 30% 97%;
+    --foreground: 220 20% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 18%;
+
+    --primary: 140 25% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 40% 92%;
+    --secondary-foreground: 200 30% 25%;
+
+    --muted: 45 20% 93%;
+    --muted-foreground: 220 10% 42%;
+
+    --accent: 42 75% 62%;
+    --accent-foreground: 42 60% 18%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 45 15% 88%;
+    --input: 45 15% 88%;
+    --ring: 140 25% 38%;
+
+    /* Mustard yellow for text links (<a href>) — see tailwind `link` / `link-hover` */
+    --link: 42 78% 36%;
+    --link-hover: 42 82% 28%;
+
+    --radius: 0.75rem;
+
+    /* Unified UI beige (hero, nav, footer) — warm stone, not yellow */
+    --shell-beige: 38 24% 91%;
+    --shell-beige-soft: 40 20% 94%;
+    --shell-beige-muted: 36 14% 84%;
+
+    /* Pastel section backgrounds */
+    --pastel-mustard: 45 65% 88%;
+    --pastel-sage: 140 30% 89%;
+    --pastel-blue: 200 45% 91%;
+    --pastel-cream: 40 40% 94%;
+    --pastel-mint: 155 35% 90%;
+    --pastel-lavender: 230 35% 92%;
+    /* Warm terracotta — distinct from blue/lavender, still soft */
+    --pastel-terracotta: 8 42% 90%;
+  }
+
+  .dark {
+    --background: 220 15% 10%;
+    --foreground: 45 20% 92%;
+
+    --card: 220 15% 14%;
+    --card-foreground: 45 20% 92%;
+
+    --popover: 220 15% 14%;
+    --popover-foreground: 45 20% 92%;
+
+    --primary: 140 30% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 20% 20%;
+    --secondary-foreground: 200 30% 85%;
+
+    --muted: 220 10% 20%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 42 50% 45%;
+    --accent-foreground: 42 60% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 10% 20%;
+    --input: 220 10% 20%;
+    --ring: 140 30% 50%;
+
+    --pastel-mustard: 45 20% 16%;
+    --pastel-sage: 140 12% 15%;
+    --pastel-blue: 200 15% 16%;
+    --pastel-cream: 40 12% 14%;
+    --pastel-mint: 155 12% 14%;
+    --pastel-lavender: 230 12% 16%;
+    --pastel-terracotta: 18 22% 16%;
+
+    --shell-beige: 35 12% 18%;
+    --shell-beige-soft: 35 10% 22%;
+    --shell-beige-muted: 32 12% 14%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-sans;
+  }
+
+  /*
+   * Mustard links in main content. Excludes button-styled links (inline-flex from Button).
+   * Navbar social icons: set explicitly in Navbar.tsx. Footer: see footer rules below.
+   */
+  main a[href]:not([class*="inline-flex"]) {
+    @apply text-link underline-offset-[3px] transition-colors;
+  }
+  main a[href]:not([class*="inline-flex"]):hover {
+    @apply text-link-hover underline;
+  }
+  footer a[href] {
+    @apply text-link no-underline transition-colors;
+  }
+  footer a[href]:hover {
+    @apply text-link-hover;
+  }
+}
+
+@layer components {
+  /**
+   * Site-wide subtle grid (lines only — works on shell, pastels, and cards).
+   */
+  .shell-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.055) 1px, transparent 1px);
+    background-size: 36px 36px;
+    background-position: center top;
+  }
+
+  /** Optional bottom fade (home hero) */
+  .shell-grid--fade {
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 95%);
+    mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 95%);
+  }
+
+  .shell-grid-fine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.035) 1px, transparent 1px);
+    background-size: 9px 9px;
+    background-position: center top;
+  }
+
+  .shell-grid-fine--fade {
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 90%);
+    mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 90%);
+  }
+}

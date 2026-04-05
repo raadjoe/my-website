@@ -4,7 +4,7 @@ import { absoluteUrl, SITE } from "./site";
 /** Per-route SEO copy — used for document title, meta description, and keywords. */
 export const PAGE_SEO = {
   home: {
-    title: `${SITE.name} | Associate Prof.`,
+    title: `${SITE.name}`,
     description:
       "Joe Raad — Associate Professor at Université Paris-Saclay (LISN / LaHDAK). Research on knowledge representation, the web of data, and intelligent systems; teaching in computer science at the IUT of Orsay and graduate programmes.",
     keywords:
